@@ -62,6 +62,8 @@ int main()
 			printf("Input an integer that you want to add to the linked list: ");
 			scanf("%d", &i);
 			j = insertSortedLL(&ll, i);
+			printf("Return Index is: ");
+			printf("%d", j);
 			printf("The resulting linked list is: ");
 			printList(&ll);
 			break;
@@ -90,7 +92,38 @@ int main()
 
 int insertSortedLL(LinkedList *ll, int item)
 {
-	/* add your code here */
+	ListNode *cur = ll->head;
+	ListNode *prev = NULL;
+
+	int i = 0;
+	while (cur != NULL) {
+		if (item < cur->item) {
+			break; 
+		} else if (cur->item == item) {
+			i = -1;
+			break;
+		} else {
+			i++;
+			prev = cur;
+			cur = cur->next;
+		}
+	}
+
+	if (i == -1) {
+		return -1;
+	}
+	// 해당 인덱스에 삽입
+	ListNode *new_node = malloc(sizeof(ListNode));
+	new_node->item = item;
+	new_node->next = cur;
+	if (prev != NULL) {
+		prev->next = new_node;
+	} else {
+		ll->head = new_node;
+	}
+	
+	ll->size++;
+	return i;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
