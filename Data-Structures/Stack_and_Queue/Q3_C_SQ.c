@@ -103,7 +103,35 @@ int main()
 
 int isStackPairwiseConsecutive(Stack *s)
 {
-  /* add your code here */
+	if (s == NULL || s->ll.size % 2 == 1) return 0;
+
+	LinkedList *buf = malloc(sizeof(LinkedList));
+	buf->head = NULL;
+	buf->size = 0;
+
+	int val1, val2;
+	int isPair = 1;
+	
+	for (int i = 0; i < s->ll.size / 2; i++) {
+		val1 = pop(s);
+		val2 = pop(s);
+		insertNode(buf, 0, val1);
+		insertNode(buf, 0, val2);
+
+		if (abs(val1 - val2) != 1) {
+			isPair = 0;
+			break;
+		}
+	}
+
+	ListNode *cur = buf->head;
+	while (cur != NULL) {
+		push(s, cur->item);
+		cur = cur->next;
+	}
+
+	free(buf);
+	return isPair;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

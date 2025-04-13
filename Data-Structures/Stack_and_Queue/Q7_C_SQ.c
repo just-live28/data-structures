@@ -102,9 +102,41 @@ int main()
 }
 
 ////////////////////////////////////////////////////////////
-int balanced(char *expression)
-{
-/* add your code here */
+int balanced(char *expression) {
+
+	Stack *s = malloc(sizeof(Stack));
+	s->ll.head = NULL;
+	s->ll.size = 0;
+
+	char c, top;
+	int i = 0;
+	int result = 0;
+	while (*(expression + i)) {
+		c = *(expression + i);
+		if (c == '(' || c == '{' || c == '[') {
+			push(s, c);
+		} else {
+			if (isEmptyStack(s)) {
+				result = 1;
+				break;
+			}
+			top = peek(s);
+			if ((c == ')' && top == '(') || (c == '}' && top == '{') || (c == ']' && top == '[')) {
+				pop(s);
+			} else {
+				result = 1;
+				break;
+			}
+		}
+		i++;
+	}
+
+	if (!result && !isEmptyStack(s)) {
+		result = 1;
+	}
+
+	free(s);
+	return result;
 }
 
 ////////////////////////////////////////////////////////////

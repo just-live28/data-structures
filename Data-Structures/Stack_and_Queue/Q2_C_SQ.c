@@ -33,7 +33,6 @@ typedef struct _stack
 
 // You should not change the prototypes of these functions
 void createStackFromLinkedList(LinkedList *ll , Stack *stack);
-void removeEvenValues(Stack *s);
 
 void push(Stack *s , int item);
 int pop(Stack *s);
@@ -65,12 +64,11 @@ int main()
 
 	printf("1: Insert an integer into the linked list:\n");
 	printf("2: Create the stack from the linked list:\n");
-	printf("3: Remove even numbers from the stack:\n");
 	printf("0: Quit:\n");
 
 	while (c != 0)
 	{
-		printf("Please input your choice(1/2/3/0): ");
+		printf("Please input your choice(1/2/0): ");
 		scanf("%d", &c);
 
 		switch (c)
@@ -86,13 +84,6 @@ int main()
 			createStackFromLinkedList(&ll, &s); // You need to code this function
 			printf("The resulting stack is: ");
 			printList(&(s.ll));
-			break;
-		case 3:
-			removeEvenValues(&s); // You need to code this function
-			printf("The resulting stack after removing even integers is: ");
-			printList(&(s.ll));
-			removeAllItemsFromStack(&s);
-			removeAllItems(&ll);
 			break;
 		case 0:
 			removeAllItemsFromStack(&s);
@@ -113,12 +104,18 @@ int main()
 
 void createStackFromLinkedList(LinkedList *ll, Stack *s)
 {
-    /* add your code here */
-}
+    if (ll == NULL || ll->head == NULL) return;
 
-void removeEvenValues(Stack *s)
-{
-	/* add your code here */
+	if (!isEmptyStack(s)) {
+		removeAllItemsFromStack(s);
+	}
+
+	ListNode *cur = ll->head;
+
+	while (cur != NULL) {
+		push(s, cur->item);
+		cur = cur->next;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////
