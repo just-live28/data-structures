@@ -33,6 +33,7 @@ typedef struct _queue
 
 // You should not change the prototypes of these functions
 void createQueueFromLinkedList(LinkedList *ll, Queue *q);
+void removeOddValues(Queue *q);
 
 void enqueue(Queue *q, int item);
 int dequeue(Queue *q);
@@ -66,12 +67,13 @@ int main()
 
 	printf("1: Insert an integer into the linked list:\n");
 	printf("2: Create the queue from the linked list:\n");
+	printf("3: Remove odd numbers from the queue:\n");
 	printf("0: Quit:\n");
 
 
 	while (c != 0)
 	{
-		printf("Please input your choice(1/2/0): ");
+		printf("Please input your choice(1/2/3/0): ");
 		scanf("%d", &c);
 
 		switch (c)
@@ -87,6 +89,13 @@ int main()
 			createQueueFromLinkedList(&ll, &q); // You need to code this function
 			printf("The resulting queue is: ");
 			printList(&(q.ll));
+			break;
+		case 3:
+			removeOddValues(&q); // You need to code this function
+			printf("The resulting queue after removing odd integers is: ");
+			printList(&(q.ll));
+			removeAllItemsFromQueue(&q);
+			removeAllItems(&ll);
 			break;
 		case 0:
 			removeAllItemsFromQueue(&q);
@@ -104,6 +113,17 @@ int main()
 
 
 //////////////////////////////////////////////////////////////////////////////////
+
+void removeOddValues(Queue *q)
+{
+    int originalSize = q->ll.size;
+    for (int i = 0; i < originalSize; i++) {
+        int val = dequeue(q);
+        if (val % 2 == 0) {
+            enqueue(q, val);
+        }
+    }
+}
 
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {

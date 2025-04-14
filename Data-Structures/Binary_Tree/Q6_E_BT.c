@@ -103,9 +103,12 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void printSmallerValues(BTNode *node, int m)
-{
-	/* add your code here */
+void printSmallerValues(BTNode *node, int m) {
+    if (node == NULL) return;
+
+    printSmallerValues(node->left, m);
+    if (node->item < m) printf("%d ", node->item);
+    printSmallerValues(node->right, m);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
