@@ -89,9 +89,31 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void postOrderIterativeS1(BSTNode *root)
-{
-	 /* add your code here */
+void postOrderIterativeS1(BSTNode *root) {
+	if (root == NULL) return;
+
+	Stack stk;
+	stk.top = NULL;
+	BSTNode *cur = root;
+	BSTNode *last = NULL;
+
+	while (cur != NULL || !isEmpty(&stk)) {
+		while (cur != NULL) {
+			push(&stk, cur);
+			cur = cur->left;
+		}
+
+		cur = peek(&stk);
+
+		if (cur->right == NULL || cur->right == last) {
+			printf("%d ", cur->item);
+			pop(&stk);
+			last = cur;
+			cur = NULL;
+		} else {
+			cur = cur->right;
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
